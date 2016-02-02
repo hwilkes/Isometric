@@ -38,7 +38,9 @@ public class MainRenderer {
     }
 
     private void setupVertices(){
-        vertices = BufferUtils.createFloatBuffer(3 * 4 * 6);
+        int cubesize = 3*4*6;
+        int triangleSize = 3*4*4;
+        vertices = BufferUtils.createFloatBuffer(cubesize+triangleSize);
 
         vertices.put(new float[] {
                 -1.0f, -1.0f, 1.0f,
@@ -71,6 +73,25 @@ public class MainRenderer {
                 -1.0f, 1.0f, 1.0f,
                 -1.0f, 1.0f, -1.0f});
 
+        vertices.put(new float[]{
+                1.0f,0.0f,0.0f,
+                3.0f,0.0f,0.0f,
+                1.0f,0.0f,2.0f,
+
+                1.0f,0.0f,0.0f,
+                3.0f,0.0f,0.0f,
+                1.0f,0.0f,2.0f,
+
+                1.0f,0.0f,0.0f,
+                3.0f,0.0f,0.0f,
+                1.0f,0.0f,2.0f,
+
+                1.0f,0.0f,0.0f,
+                3.0f,0.0f,0.0f,
+                1.0f,0.0f,2.0f
+
+        });
+
     }
 
     private void updateFPS() {
@@ -101,7 +122,7 @@ public class MainRenderer {
         return delta;
     }
 
-    private void render() {
+    private void renderCube() {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT); // Clear The Screen And The Depth Buffer
         GL11.glPushMatrix();
         //GL11.glLoadIdentity(); // Reset The Current Modelview Matrix
@@ -122,6 +143,8 @@ public class MainRenderer {
         // Disable vertex arrays
         GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
         GL11.glPopMatrix();
+
+
     }
 
 
@@ -164,7 +187,7 @@ public class MainRenderer {
         while (!Display.isCloseRequested()) {
             int delta = getDelta();
             update(delta);
-            render();
+            renderCube();
 
             Display.update();
             Display.sync(60);
